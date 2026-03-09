@@ -13,6 +13,9 @@ app.set("views", __dirname + "/views");
 //config router 
 webRoutes(app);
 
+//config static file
+app.use(express.static("public"));
+
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT} with address http://localhost:${PORT}`);
 });
