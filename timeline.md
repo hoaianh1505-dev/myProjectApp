@@ -8,3 +8,9 @@ npm install express
 
 # Run index.js  
 npm start   
+
+# Install nodemon
+npm install nodemon
+
+# Run nodemon
+npm run dev 
