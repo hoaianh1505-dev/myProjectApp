@@ -10,11 +10,18 @@ const PORT = process.env.PORT || 8080;
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 
+//config body parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 //config router 
 webRoutes(app);
 
 //config static file
 app.use(express.static("public"));
+
+
+
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT} with address http://localhost:${PORT}`);
