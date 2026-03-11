@@ -1,7 +1,8 @@
 // const express = require("express");
 import express from "express";
 import 'dotenv/config';
-import webRoutes from "./routes/web.";
+import webRoutes from "./routes/web";
+import getConnection from "./config/database";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -14,14 +15,11 @@ app.set("views", __dirname + "/views");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//config router 
-webRoutes(app);
-
 //config static file
 app.use(express.static("public"));
 
-
-
+// config router
+webRoutes(app);
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT} with address http://localhost:${PORT}`);

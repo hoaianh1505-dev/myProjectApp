@@ -13,12 +13,53 @@
 </head>
 
 <body>
-    <h1>Home</h1>
-    <p>Hello World !!!</p>
-    <div>
-        <!-- <img src="/images/traidep.jpg"> -->
+    <div style="margin: 25px;">
+        <div style="display:flex;justify-content: space-between;align-items: center;">
+            <h1>List User</h1>
+            <div>
+                <a href="/create-user" class="btn btn-warning">Create new User</a>
+            </div>
+        </div>
+        <hr />
     </div>
-    <a href="/create-user" class="btn btn-warning">Create new User</a>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            <% users.forEach( function (user){ %>
+                <tr>
+                    <td>
+                        <%= user.id %>
+                    </td>
+                    <td>
+                        <%= user.email %>
+                    </td>
+                    <td>
+                        <%= user.name %>
+                    </td>
+                    <td>
+                        <%= user.address %>
+                    </td>
+                    <td>
+                        <div style="display:flex;gap:10px">
+                            <form action="/handle-view-user/<%= user.id %>" method="get">
+                                <button type="submit" class="btn btn-warning">View</button>
+                            </form>
+                            <form action="/handle-delete-user/<%= user.id %>" method="post">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                <% } ) %>
+        </tbody>
+    </table>
+    </div>
 </body>
 
 </html>
