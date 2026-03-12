@@ -14,27 +14,34 @@ const getCreateUserPage = async (req: Request, res: Response) => {
     });
 }
 const postCreateUser = async (req: Request, res: Response) => {
-    const { fullname, uername, phone, role, address } = req.body;
-    // await handleCreateUser(fullname, email, address);
-    res.redirect('/');
+    const { fullname, username, phone, role, address } = req.body;
+    const file = req.file;
+    const avatar = file?.filename ?? null;
+    await handleCreateUser(fullname, username, address, phone, avatar, role);
+    res.redirect('/admin/user');
 }
 const postDeleteUser = async (req: Request, res: Response) => {
     const { id } = req.params;
     await handleDeleteUser(id.toString());
-    res.redirect('/');
+    res.redirect('/admin/user');
 }
 const getViewUser = async (req: Request, res: Response) => {
     const { id } = req.params;
+    const roles = await getAllRoles();
     // get user by id
     const user = await getUserById(id.toString());
-    return res.render('view-user.ejs', {
-        user
+    return res.render('admin/user/detail', {
+        id,
+        user,
+        roles
+
     });
 }
 const postUpdateUser = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { fullname, email, address } = req.body;
-    await handleUpdateUser(id.toString(), fullname, email, address);
-    res.redirect('/');
+    const { id, fullName, phone, role, address } = req.body;
+    const file = req.file;
+    const avatar = file?.filename ?? undefined; // nếu lỗi thì để undefine cho đỡ bug
+    await handleUpdateUser(id.toString(), fullName, phone, role, address, avatar);
+    res.redirect('/admin/user');
 }
 export { getHomePage, getCreateUserPage, postCreateUser, postDeleteUser, getViewUser, postUpdateUser }

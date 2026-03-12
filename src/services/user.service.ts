@@ -1,17 +1,27 @@
 import { Prisma } from "@prisma/client";
 import getConnection from "../config/database";
 import { prisma } from "../config/client";
-
-const handleCreateUser = async (fullname: string, email: string, address: string) => {
-
+import { ACCOUNT_TYPE } from "config/constant";
+import { hash } from "bcrypt";
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const hashPassword = async (plainText: string) => {
+    return await bcrypt.hash(plainText, saltRounds);
+}
+const handleCreateUser = async (fullname: string, email: string, address: string, phone: string, avatar: string, role: string) => {
+    const defaultPassword = await hashPassword('123456');
     try {
         const user = await prisma.user.create({
             data: {
                 fullName: fullname,
                 username: email,
                 address: address,
-                password: "",
-                accountType: ""
+                password: defaultPassword,
+                accountType: ACCOUNT_TYPE.SYSTEM,
+                avatar: avatar,
+                phone: phone,
+                roleId: +role
+
             }
         })
         return user;
@@ -34,6 +44,7 @@ const handleDeleteUser = async (id: string) => {
             id: +id
         }
     })
+    return user;
 }
 const getUserById = async (id: string) => {
     const user = prisma.user.findUnique({
@@ -43,18 +54,19 @@ const getUserById = async (id: string) => {
     })
     return user;
 }
-const handleUpdateUser = async (id: string, fullname: string, email: string, address: string) => {
-    const user = prisma.user.update({
+const handleUpdateUser = async (id: string, fullname: string, phone: string, role: string, address: string, avatar?: string) => {
+    const user = await prisma.user.update({
         where: {
             id: +id
         },
         data: {
             fullName: fullname,
-            username: email,
+            phone: phone,
+            roleId: +role,
             address: address,
-            password: "",
-            accountType: ""
+            ...avatar !== undefined && { avatar: avatar },
         }
     })
+    return user;
 }
-export { handleCreateUser, getAllUsers, handleDeleteUser, getUserById, handleUpdateUser, getAllRoles }
+export { handleCreateUser, getAllUsers, handleDeleteUser, getUserById, handleUpdateUser, getAllRoles, hashPassword }
