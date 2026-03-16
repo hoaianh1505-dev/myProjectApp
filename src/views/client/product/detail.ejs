@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Fruitables - Vegetable Website Template</title>
+    <title>
+        <%= product.name %>-HaziShop
+    </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -42,10 +44,9 @@
 
 
     <!-- Navbar start -->
-    <%- include('../layout/header.ejs') %>
+    <%- include('../layout/header.ejs'); -%>
         <!-- Navbar End -->
-
-        <div class="'py-5"></div>
+        <div class="py-5"></div>
 
         <!-- Single Product Start -->
         <div class="container-fluid py-5 mt-5">
@@ -364,8 +365,8 @@
 
 
         <!-- Footer Start -->
-        <%- include('../layout/footer.ejs') %>
-            <!-- Copyright End -->
+        <%- include('../layout/footer.ejs'); -%>
+            <!-- Footer End -->
 
 
 
