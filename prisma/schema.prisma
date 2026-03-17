@@ -4,7 +4,16 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  // url      = env("DATABASE_URL")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  sid       String   @unique @db.VarChar(255)
+  data      String   @db.MediumText
+  expiresAt DateTime
+
+  @@map("sessions")
 }
 
 model User {

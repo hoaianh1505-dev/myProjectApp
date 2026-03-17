@@ -4,8 +4,11 @@ import { getProducts } from "src/services/client/item.service";
 const getHomePage = async (req: Request, res: Response) => {
     //get user
     const products = await getProducts();
+    const user = req.user;
+    console.log(user)
     return res.render('client/home/show', {
-        products
+        products,
+        user
     });
 }
 const getCreateUserPage = async (req: Request, res: Response) => {

@@ -2,11 +2,13 @@ import { Prisma } from "@prisma/client";
 import getConnection from "../config/database";
 import { prisma } from "../config/client";
 import { ACCOUNT_TYPE } from "config/constant";
-import { hash } from "bcrypt";
-const bcrypt = require('bcrypt');
+import bcrypt from "bcrypt";
 const saltRounds = 10;
 const hashPassword = async (plainText: string) => {
     return await bcrypt.hash(plainText, saltRounds);
+}
+const comparePassword = async (plainText: string, hashText: string) => {
+    return await bcrypt.compare(plainText, hashText);
 }
 const handleCreateUser = async (fullname: string, email: string, address: string, phone: string, avatar: string, role: string) => {
     const defaultPassword = await hashPassword('123456');
@@ -47,7 +49,7 @@ const handleDeleteUser = async (id: string) => {
     return user;
 }
 const getUserById = async (id: string) => {
-    const user = prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
         where: {
             id: +id
         }
@@ -69,4 +71,4 @@ const handleUpdateUser = async (id: string, fullname: string, phone: string, rol
     })
     return user;
 }
-export { handleCreateUser, getAllUsers, handleDeleteUser, getUserById, handleUpdateUser, getAllRoles, hashPassword }
+export { handleCreateUser, getAllUsers, handleDeleteUser, getUserById, handleUpdateUser, getAllRoles, hashPassword, comparePassword }

@@ -1,0 +1,52 @@
+/* ============================================
+   Auth Pages - Login & Register
+   ============================================ */
+
+/* Body gradient background */
+.auth-body {
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    min-height: 100vh;
+}
+
+/* Center content vertically */
+.auth-row {
+    min-height: 100vh;
+    align-items: center;
+}
+
+/* Card shadow */
+.auth-card {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Page title */
+.auth-title {
+    color: #2c5364;
+    font-size: 28px;
+}
+
+/* Form inputs */
+.auth-input {
+    height: 56px;
+}
+
+/* Hidden elements (flash messages, fake fields) */
+.auth-hidden {
+    display: none;
+}
+
+/* Submit button */
+.auth-btn {
+    background: linear-gradient(135deg, #0f2027, #2c5364);
+    font-size: 16px;
+}
+
+/* Footer links */
+.auth-footer a {
+    color: #2c5364;
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
