@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  // url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model Session {
@@ -27,8 +27,35 @@ model User {
   avatar      String? @db.VarChar(255)
   roleId      Int?
   role        Role?   @relation(fields: [roleId], references: [id])
+  cart        Cart?
 
   @@map("users")
+}
+
+model Cart {
+  id  Int @id @default(autoincrement())
+  sum Int
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique
+
+  cartDetails CartDetail[]
+
+  @@map("carts")
+}
+
+model CartDetail {
+  id       Int @id @default(autoincrement())
+  price    Int
+  quantity Int
+
+  cart   Cart @relation(fields: [cartId], references: [id])
+  cartId Int
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+
+  @@map("cart_detail")
 }
 
 model Role {
@@ -48,16 +75,17 @@ model Order {
 }
 
 model Product {
-  id         Int     @id @default(autoincrement())
-  name       String  @db.VarChar(255)
-  price      Int
-  image      String? @db.VarChar(255)
-  detailDesc String  @db.MediumText
-  shortDesc  String  @db.VarChar(255)
-  quantity   Int
-  sold       Int?    @default(0)
-  factory    String  @db.VarChar(255)
-  target     String  @db.VarChar(255)
+  id          Int          @id @default(autoincrement())
+  name        String       @db.VarChar(255)
+  price       Int
+  image       String?      @db.VarChar(255)
+  detailDesc  String       @db.MediumText
+  shortDesc   String       @db.VarChar(255)
+  quantity    Int
+  sold        Int?         @default(0)
+  factory     String       @db.VarChar(255)
+  target      String       @db.VarChar(255)
+  cartDetails CartDetail[]
 
   @@map("products")
 }

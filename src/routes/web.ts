@@ -1,4 +1,4 @@
-import { getProductPage } from '../controllers/client/product.controller';
+import { getCartPage, getProductPage, postAddProductToCart } from '../controllers/client/product.controller';
 import express, { Express } from 'express';
 import { getCreateUserPage, getHomePage, getViewUser, postCreateUser, postDeleteUser, postUpdateUser } from '../controllers/user.controller';
 import { getDashboardPage, getAdminUserPage, getAdminProductPage, getAdminOrderPage } from 'controllers/admin/dashboard.controller';
@@ -24,6 +24,8 @@ const webRoutes = (app: Express) => {
     }))
     router.post("/logout", postLogout)
     router.post("/register", postRegister)
+    router.post("/add-product-to-cart/:id", postAddProductToCart)
+    router.get("/cart", getCartPage)
 
     //admin route
     router.get('/admin', getDashboardPage);
